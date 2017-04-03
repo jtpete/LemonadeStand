@@ -8,8 +8,9 @@ namespace LemonadeStand
 {
     class Game
     {
-        Player Player1 = new Player("Player1", 100);
+        Player player1 = new Player("Player1", 100);
         bool gameDone = false;
+        bool gameReady = false;
         int gameLength = 7;
 
         public void PlayGame()
@@ -17,12 +18,22 @@ namespace LemonadeStand
             while (!gameDone)
             {
                 SetupGame();
+                if (gameReady)
+                {
+                    SellLemonade();
+                }
             }
+        }
+
+        private void SellLemonade()
+        {
+            Season mySeason = new LemonadeStand.Season(gameLength);
+            mySeason.SalesSeason(player1);
         }
 
         private void SetupGame()
         {
-            string response = UserInterface.GameHeader().ToLower();
+            string response = UserInterface.GameStartMenu().ToLower();
             switch (response)
             {
                 case "1":
@@ -30,8 +41,11 @@ namespace LemonadeStand
                 case "new":
                 case "n":
                     {
-                        // GET Player's name & duration 
-                        // Go to today menu
+                        UserInterface.GetStartedHeader();
+                        player1.GetNameFromUser();
+                        UserInterface.GetStartedHeader();
+                        gameLength = UserInterface.UserGameLength(player1.Name);
+                        gameReady = true;
                         break;
                     }
                 case "2":
@@ -48,7 +62,9 @@ namespace LemonadeStand
                 case "scores":
                 case "h":
                     {
-                        // High Score Menu
+                        Console.WriteLine("Check Out all the winners!!");
+                        Console.ReadLine();
+                        SetupGame();
                         break;
                     }
                 case "4":

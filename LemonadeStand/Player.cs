@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Player
+    public class Player
     {
         private string name;
         private double wallet;
+        public double Wallet { get { return wallet; } }
         public string Name { get { return name; } set { name = value; } }
 
         public Player(string name, double startAmount)
@@ -20,10 +21,7 @@ namespace LemonadeStand
 
         public void GetNameFromUser()
         {
-            string response;
-
-            Console.WriteLine($"{name} is such a boring name, what shall I call you?.");
-            response = Console.ReadLine();
+            string response = UserInterface.UserName(name);
             switch (response)
             {
                 case " ":
