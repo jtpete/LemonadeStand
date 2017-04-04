@@ -131,6 +131,27 @@ namespace LemonadeStand
             Console.WriteLine($"|_______________________________________________");
         }
 
+        public static void EndOfDayReport(string name, double wallet, int startingPitcherCount, int numPitchersLeft, double totalSales, int custVisits, int temp, string condition, string message)
+        {
+            Console.Clear();
+            Console.WriteLine($" _______________________________________________ ");
+            Console.WriteLine($"|                 TODAY'S SALES                   ");
+            Console.WriteLine("|   Temp: {0}\u00B0     Conditions: {1}  ", temp, condition);
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|   {name}                                        ");
+            Console.WriteLine("|   Total: ${0}                     ", wallet.ToString("0.00"));
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|     Current Supplies:                            ");
+            Console.WriteLine("|     Total Income               :  ${0}       ", totalSales.ToString("0.00"));
+            Console.WriteLine($"|     Total Pitchers Available  : {startingPitcherCount}");
+            Console.WriteLine($"|     Total Pitchers Sold       : {startingPitcherCount - numPitchersLeft}");
+            Console.WriteLine($"|     Total Customers           : {custVisits}");
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|_______________________________________________");
+            Console.WriteLine($"|   {message}                                   ");
+            Console.WriteLine($"|_______________________________________________");
+        }
+
 
         public static void GetStartedHeader()
         {

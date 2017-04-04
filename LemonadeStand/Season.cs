@@ -9,7 +9,7 @@ namespace LemonadeStand
     class Season
     {
         Weather myWeather = new Weather();
-        //Day
+
         int seasonLength;
         public Season(int seasonLength)
         {
@@ -24,7 +24,7 @@ namespace LemonadeStand
                 PrepareForDay(player1);
                 //run through day
                 //report on day
-                days = seasonLength;
+                days += 1;
             }
         }
 
@@ -68,7 +68,8 @@ namespace LemonadeStand
                 case "start":
                 case "day":
                 case "go":
-                    // start day
+                    Day newDay = new Day(myWeather.CurrentTemp, myWeather.CurrentCondition, player1);
+                    newDay.SellLemonade();
                     break;
                 default:
                     PrepareForDay(player1);

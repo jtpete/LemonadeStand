@@ -10,7 +10,7 @@ namespace LemonadeStand
     {
         private string name;
         private double wallet;
-        public double Wallet { get { return wallet; } }
+        public double Wallet { get { return wallet; } set { wallet = value; } }
         public string Name { get { return name; } set { name = value; } }
         private Supplies mySupplies = new Supplies();
         public Supplies MySupplies { get { return mySupplies; } }
@@ -63,6 +63,7 @@ namespace LemonadeStand
                             amtLemons = 0;
                             UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
                             Console.ReadLine();
+                            message = "How would you like to mix your own lemonade ?";
                         }
                         break;
                     case "2":
@@ -77,6 +78,7 @@ namespace LemonadeStand
                             amtSugar = 0;
                             UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
                             Console.ReadLine();
+                            message = "How would you like to mix your own lemonade ?";
                         }
                         break;
                     case "3":
@@ -91,6 +93,7 @@ namespace LemonadeStand
                             amtIce = 0;
                             UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
                             Console.ReadLine();
+                            message = "How would you like to mix your own lemonade ?";
                         }
                         break;
                     case "4":
@@ -104,6 +107,7 @@ namespace LemonadeStand
                             numPitchers = 0;
                             UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
                             Console.ReadLine();
+                            message = "How would you like to mix your own lemonade ?";
                         }
                         break;
                     case "5":
