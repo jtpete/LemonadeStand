@@ -61,7 +61,7 @@ namespace LemonadeStand
                 case "prepare":
                 case "lemonade":
                 case "l":
-                    // prepare lemonade
+                    player1.MixLemonade();                    
                     break;
                 case "5":
                 case "start day":

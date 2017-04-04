@@ -15,6 +15,8 @@ namespace LemonadeStand
         public int MySugar { get { return mySugar.Count; } }
         public List<Ice> myIce = new List<Ice>();
         public int MyIce { get { return myIce.Count; } }
+        public List<Lemonade> myLemonadePitchers = new List<Lemonade>();
+        public int MyLemonadePitchers { get { return myLemonadePitchers.Count; } }
 
 
         public void RemoveSupply(string supplyName, int qty)
@@ -23,37 +25,48 @@ namespace LemonadeStand
             switch(supplyName)
             {
                 case "Lemon":
-                    if (qty >= myLemons.Count)
+                    if (qty <= myLemons.Count)
                     {
                         for (int i = 0; i < qty; i++)
                         {
-                            myLemons.RemoveAt(i);
+                            myLemons.RemoveAt(0);
                         }
                     }
                     else
                         myLemons.RemoveAll(x => x.Name == "Lemon");
                     break;
                 case "Sugar":
-                    if (qty >= mySugar.Count)
+                    if (qty <= mySugar.Count)
                     {
                         for (int i = 0; i < qty; i++)
                         {
-                            mySugar.RemoveAt(i);
+                            mySugar.RemoveAt(0);
                         }
                     }
                     else
                         mySugar.RemoveAll(x => x.Name == "Sugar");
                     break;
                 case "Ice":
-                    if (qty >= myIce.Count)
+                    if (qty <= myIce.Count)
                     {
                         for (int i = 0; i < qty; i++)
                         {
-                            myIce.RemoveAt(i);
+                            myIce.RemoveAt(0);
                         }
                     }
                     else
                         myIce.RemoveAll(x => x.Name == "Ice");
+                    break;
+                case "Lemonade Pitcher":
+                    if (qty >= myLemonadePitchers.Count)
+                    {
+                        for (int i = 0; i < qty; i++)
+                        {
+                            myLemonadePitchers.RemoveAt(0);
+                        }
+                    }
+                    else
+                        myLemonadePitchers.RemoveAll(x => x.Name == "Lemonade");
                     break;
             }
         }
@@ -63,6 +76,7 @@ namespace LemonadeStand
             myLemons.RemoveAll(x => { return x.BadItem();});
             mySugar.RemoveAll(x => { return x.BadItem();});
             mySugar.RemoveAll(x => { return x.BadItem();});
+            myLemonadePitchers.RemoveAll(x => { return x.BadItem(); });
         }
 
     }

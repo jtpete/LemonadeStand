@@ -68,6 +68,44 @@ namespace LemonadeStand
              Console.ReadLine();
         }
 
+        public static void MixLemonadeMenu(string name, double wallet, Supplies suppliesList, int amtLemon, int amtSugar, int amtIce, double price,  int numPitchers, string mixName, string message)
+        {
+            int supplyOffset;
+            if (numPitchers == 0)
+                supplyOffset = 1;
+            else
+                supplyOffset = numPitchers;
+            Console.Clear();
+            Console.WriteLine($" _______________________________________________ ");
+            Console.WriteLine($"|                 MIX LEMONADE PITCHERS          ");
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|   {name}                                        ");
+            Console.WriteLine("|   Total: ${0}                     ", wallet.ToString("0.00"));
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|     Current Supplies:                            ");
+            Console.WriteLine($"|     Lemons        : {suppliesList.MyLemons - (amtLemon * supplyOffset)}");
+            Console.WriteLine($"|     Cups of Sugar : {suppliesList.MySugar- (amtSugar * supplyOffset)}");
+            Console.WriteLine($"|     Ice Cubes     : {suppliesList.MyIce - (amtIce * supplyOffset)}");
+            Console.WriteLine($"|     Pitchers      : {suppliesList.MyLemonadePitchers + numPitchers}");
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|______________________________________________");
+            Console.WriteLine($"|                                Mixture / Pitcher: ");
+            Console.WriteLine("|     1.  Add Lemons              {0} ", amtLemon);
+            Console.WriteLine("|     2.  Add Cups of Sugar       {0} ", amtSugar);
+            Console.WriteLine("|     3.  Add Ice Cubes           {0} ", amtIce);
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|                                Mixture Details:      ");
+            Console.WriteLine("|     4.  Number of Pitchers      {0} ", numPitchers);
+            Console.WriteLine("|     5.  Set Price               ${0} ", price.ToString("0.00"));
+            Console.WriteLine("|     6.  Set Mix Name            {0} ", mixName);
+            Console.WriteLine("|     7.  Make This Mix                          ");
+            Console.WriteLine("|     8.  Leave Without Making Mix               ");
+            Console.WriteLine("|     9.  Done                                   ");
+            Console.WriteLine($"|_______________________________________________");
+            Console.WriteLine($"|   {message}                                   ");
+            Console.WriteLine($"|_______________________________________________");
+        }
+
         public static void PurchaseSuppliesMenu(string name, double wallet, Supplies suppliesList, Supplier vendor, string message)
         {
             Console.Clear();

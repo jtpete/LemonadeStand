@@ -35,6 +35,224 @@ namespace LemonadeStand
                     break;
             }
         }
+        public void MixLemonade()
+        {
+            int amtLemons = 0;
+            int amtSugar = 0;
+            int amtIce = 0;
+            double price = 0;
+            int numPitchers = 0;
+            bool mixDone = false;
+            string mixName = " ";
+            string message = "How would you like to mix your own lemonade?";
+            while (!mixDone)
+            {
+                UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
+                string response = Console.ReadLine().ToLower();
+                switch (response)
+                {
+                    case "1":
+                    case "lemon":
+                    case "lemons":
+                    case "l":
+                        numPitchers = 0;
+                        amtLemons = DetermineMixQty("Lemons", amtLemons, amtSugar, amtIce, price, mixName, numPitchers); 
+                        if(!EnoughToMix("Lemon", amtLemons))
+                        {
+                            message = "You need to purchase more lemons. Please hit Enter.";
+                            amtLemons = 0;
+                            UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
+                            Console.ReadLine();
+                        }
+                        break;
+                    case "2":
+                    case "sugar":
+                    case "sugars":
+                    case "s":
+                        numPitchers = 0;
+                        amtSugar = DetermineMixQty("Sugar", amtLemons, amtSugar, amtIce, price, mixName, numPitchers);
+                        if (!EnoughToMix("Sugar", amtSugar))
+                        {
+                            message = "You need to purchase more sugar. Please hit Enter.";
+                            amtSugar = 0;
+                            UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
+                            Console.ReadLine();
+                        }
+                        break;
+                    case "3":
+                    case "ice":
+                    case "ice cubes":
+                    case "i":
+                        numPitchers = 0;
+                        amtIce = DetermineMixQty("Ice", amtLemons, amtSugar, amtIce, price, mixName, numPitchers);
+                        if (!EnoughToMix("Ice", amtIce))
+                        {
+                            message = "You need to purchase more ice. Please hit Enter.";
+                            amtIce = 0;
+                            UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
+                            Console.ReadLine();
+                        }
+                        break;
+                    case "4":
+                    case "pitcher":
+                    case "pitchers":
+                    case "p":
+                        numPitchers = DetermineMixQty("Pitchers", amtLemons, amtSugar, amtIce, price, mixName, numPitchers);
+                        if (!EnoughForPitchers(amtLemons, amtSugar, amtIce, numPitchers))
+                        {
+                            message = "You do not have enough supplies for that many pitchers. Please hit Enter.";
+                            numPitchers = 0;
+                            UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
+                            Console.ReadLine();
+                        }
+                        break;
+                    case "5":
+                    case "price":
+                    case "money":
+                        price = DeterminePriceFromUser(amtLemons, amtSugar, amtIce, price, mixName, numPitchers);
+                        break;
+                    case "6":
+                    case "name":
+                    case "mix":
+                        mixName = DetermineMixName(amtLemons, amtSugar, amtIce, price, mixName, numPitchers);
+                        break;
+                    case "7":
+                    case "make":
+                        if(numPitchers > 0)
+                        {
+                            ProducePitchers(amtLemons, amtSugar, amtIce, numPitchers, price, mixName);
+                            amtLemons = 0;
+                            amtSugar = 0;
+                            amtIce = 0;
+                            numPitchers = 0;
+                            message = "Done, All Mixed!";
+                        }
+                        break;
+                    case "8":
+                    case "leave":
+                        mixDone = true;
+                        break;
+                    case "9":
+                    case "done":
+                        mixDone = true;
+                        break;
+                    default:
+                        break;
+
+                }
+
+            }
+        }
+
+        private void ProducePitchers(int amtLemons, int amtSugar, int amtIce, int numPitchers, double price, string mixName)
+        {
+            if (amtLemons > 0)
+                MySupplies.RemoveSupply("Lemon", amtLemons * numPitchers);
+            if (amtSugar > 0)
+                MySupplies.RemoveSupply("Sugar", amtSugar * numPitchers);
+            if (amtIce > 0)
+                MySupplies.RemoveSupply("Ice", amtIce * numPitchers);
+
+            for(int i = 0; i < numPitchers; i++)
+            {
+                Lemonade thisMix = new Lemonade("Lemonade", 0, price, amtLemons, amtSugar, amtIce, mixName);
+                mySupplies.myLemonadePitchers.Add(thisMix);
+            }
+
+        }
+
+        private string DetermineMixName(int amtLemons, int amtSugar, int amtIce, double price, string mixName, int numPitchers)
+        {
+                string message = "What do you want to call this great mix?";
+                UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
+               return (Console.ReadLine());
+        }
+
+        private double DeterminePriceFromUser(int amtLemons, int amtSugar, int amtIce, double price, string mixName, int numPitchers)
+        {
+            {
+                double qty = 0;
+                string message = "How much do you want to sell this mix for?";
+                UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
+                string response = Console.ReadLine();
+                try
+                {
+                    qty = Convert.ToDouble(response);
+                }
+                catch
+                {
+                    message = "What you typed did not seem to work...Let's try this again.  Please hit Enter!";
+                    UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message); Console.ReadLine();
+                    qty = DeterminePriceFromUser(amtLemons, amtSugar, amtIce, price, mixName, numPitchers);
+                }
+                return qty;
+
+            }
+        }
+
+
+        private bool EnoughForPitchers(int amtLemons, int amtSugar, int amtIce, int numPitchers)
+        {
+            if (numPitchers * amtLemons > MySupplies.MyLemons ||
+                numPitchers * amtSugar > MySupplies.MySugar ||
+                numPitchers * amtIce > MySupplies.MyIce)
+                return false;
+            else
+                return true;
+        }
+
+        private bool EnoughToMix(string item, int qty)
+        {
+            switch (item)
+            {
+                case "Lemon":
+                    if (MySupplies.MyLemons >= qty)
+                    {
+                        return true;
+                    }
+                    else return false;
+                    break;
+                case "Sugar":
+                    if (MySupplies.MySugar >= qty)
+                    {
+                        return true;
+                    }
+                    else return false;
+                    break;
+                case "Ice":
+                    if (MySupplies.MyIce >= qty)
+                    {
+                        return true;
+                    }
+                    else return false;
+                    break;
+                default:
+                    return false;
+            }
+            return false;
+        }
+
+        private int DetermineMixQty(string item, int amtLemons, int amtSugar, int amtIce, double price, string mixName, int numPitchers)
+        {
+            {
+                int qty = 0;
+                string message = "How many " + item + " do you want?";
+                UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
+                string response = Console.ReadLine();
+                try
+                {
+                    qty = Int16.Parse(response);
+                }
+                catch
+                {
+                    message = "What you typed did not seem to work...Let's try this again.  Please hit Enter!";
+                    UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message); Console.ReadLine();
+                    qty = DetermineMixQty(item, amtLemons, amtSugar, amtIce, price, mixName, numPitchers);
+                }
+                return qty;
+
+            }
+        }
 
         public void PurchaseProduct()
         {
