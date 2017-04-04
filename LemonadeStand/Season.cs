@@ -54,7 +54,7 @@ namespace LemonadeStand
                 case "purchase":
                 case "supplies":
                 case "p":
-                    // purchase supplies
+                    player1.PurchaseProduct();
                     break;
                 case "4":
                 case "prepare lemonade":

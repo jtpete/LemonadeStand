@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Sugar
+    public class Sugar : Item
     {
+        public Sugar(string name, int shelfLifeDays, double price)
+        {
+            this.name = name;
+            this.shelfLifeDays = shelfLifeDays;
+            this.price = price;
+        }
     }
 }

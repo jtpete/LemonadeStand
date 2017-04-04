@@ -68,6 +68,31 @@ namespace LemonadeStand
              Console.ReadLine();
         }
 
+        public static void PurchaseSuppliesMenu(string name, double wallet, Supplies suppliesList, Supplier vendor, string message)
+        {
+            Console.Clear();
+            Console.WriteLine($" _______________________________________________ ");
+            Console.WriteLine($"|                 PURCHASE SUPPLIES              ");
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|   {name}                                        ");
+            Console.WriteLine("|   Total: ${0}                     ", wallet.ToString("0.00"));
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|     Current Supplies:                            ");
+            Console.WriteLine($"|     Lemons        : {suppliesList.MyLemons}");
+            Console.WriteLine($"|     Cups of Sugar : {suppliesList.MySugar}");
+            Console.WriteLine($"|     Ice Cubes     : {suppliesList.MyIce}");
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|______________________________________________");
+            Console.WriteLine($"|                                Current Price:  ");
+            Console.WriteLine("|     1.  Add Lemons             ${0} ", vendor.GetPrice("Lemon").ToString("0.00"));
+            Console.WriteLine("|     2.  Add Cups of Sugar      ${0} ", vendor.GetPrice("Sugar").ToString("0.00"));
+            Console.WriteLine("|     3.  Add Ice Cubes          ${0} ", vendor.GetPrice("Ice").ToString("0.00"));
+            Console.WriteLine("|     4.  Done     ");
+            Console.WriteLine($"|_______________________________________________");
+            Console.WriteLine($"|   {message}                                   ");
+            Console.WriteLine($"|_______________________________________________");
+        }
+
 
         public static void GetStartedHeader()
         {
