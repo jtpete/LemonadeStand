@@ -75,9 +75,19 @@ namespace LemonadeStand
         {
             myLemons.RemoveAll(x => { return x.BadItem();});
             mySugar.RemoveAll(x => { return x.BadItem();});
-            mySugar.RemoveAll(x => { return x.BadItem();});
+            myIce.RemoveAll(x => { return x.BadItem();});
             myLemonadePitchers.RemoveAll(x => { return x.BadItem(); });
         }
 
+        public void ReduceSupplyShelflife()
+        {
+            myLemonadePitchers.Select(c => { c.ShelfLifeDays -= 1; return c; }).ToList();
+            myLemons.Select(c => { c.ShelfLifeDays -= 1; return c; }).ToList();
+            mySugar.Select(c => { c.ShelfLifeDays -= 1; return c; }).ToList();
+            myIce.Select(c => { c.ShelfLifeDays -= 1; return c; }).ToList();
+
+
+
+        }
     }
 }

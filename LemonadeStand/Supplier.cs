@@ -8,9 +8,9 @@ namespace LemonadeStand
 {
     public class Supplier
     {
-        private Lemon aLemon = new Lemon("Lemon", 3, 2.00);
+        private Lemon aLemon = new Lemon("Lemon", 3, 1.25);
         public Lemon ALemon { get { return aLemon; } }
-        private Sugar aCupOfSugar = new Sugar("Sugar", 4, 1.00);
+        private Sugar aCupOfSugar = new Sugar("Sugar", 4, 0.75);
         public Sugar ACupOfSugar { get { return aCupOfSugar; } }
         private Ice anIceCube = new Ice("Ice", 0, .25);
         public Ice AnIceCube { get { return anIceCube; } }
@@ -31,6 +31,19 @@ namespace LemonadeStand
                     break;
             }
             return price;
+        }
+
+        public Lemon GetNewLemon()
+        {
+            return new Lemon("Lemon", 3, 1.25);
+        }
+        public Sugar GetNewSugar()
+        {
+            return new Sugar("Sugar", 4, .75);
+        }
+        public Ice GetNewIce()
+        {
+            return new Ice("Ice", 0, .25);
         }
 
     }

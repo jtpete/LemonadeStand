@@ -48,7 +48,7 @@ namespace LemonadeStand
             while (!mixDone)
             {
                 UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
-                string response = Console.ReadLine().ToLower();
+                string response = Console.ReadLine().ToLower().Trim();
                 switch (response)
                 {
                     case "1":
@@ -56,8 +56,8 @@ namespace LemonadeStand
                     case "lemons":
                     case "l":
                         numPitchers = 0;
-                        amtLemons = DetermineMixQty("Lemons", amtLemons, amtSugar, amtIce, price, mixName, numPitchers); 
-                        if(!EnoughToMix("Lemon", amtLemons))
+                        amtLemons = DetermineMixQty("Lemons", amtLemons, amtSugar, amtIce, price, mixName, numPitchers);
+                        if (!EnoughToMix("Lemon", amtLemons))
                         {
                             message = "You need to purchase more lemons. Please hit Enter.";
                             amtLemons = 0;
@@ -122,14 +122,23 @@ namespace LemonadeStand
                         break;
                     case "7":
                     case "make":
-                        if(numPitchers > 0)
+                        if (numPitchers > 0)
                         {
-                            ProducePitchers(amtLemons, amtSugar, amtIce, numPitchers, price, mixName);
-                            amtLemons = 0;
-                            amtSugar = 0;
-                            amtIce = 0;
-                            numPitchers = 0;
-                            message = "Done, All Mixed!";
+                            message = "Confirm mixture, hit Enter.  Cancel Mix, type No";
+                            UserInterface.ConfirmMixture(amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
+                            if (Console.ReadLine().ToLower().Trim() == "no")
+                            {
+                                message = "Nothing happened.  Update as needed.";
+                            }
+                            else
+                            {
+                                ProducePitchers(amtLemons, amtSugar, amtIce, numPitchers, price, mixName);
+                                amtLemons = 0;
+                                amtSugar = 0;
+                                amtIce = 0;
+                                numPitchers = 0;
+                                message = "Done, All Mixed!";
+                            }
                         }
                         break;
                     case "8":
@@ -157,7 +166,7 @@ namespace LemonadeStand
             if (amtIce > 0)
                 MySupplies.RemoveSupply("Ice", amtIce * numPitchers);
 
-            for(int i = 0; i < numPitchers; i++)
+            for (int i = 0; i < numPitchers; i++)
             {
                 Lemonade thisMix = new Lemonade("Lemonade", 0, price, amtLemons, amtSugar, amtIce, mixName);
                 mySupplies.myLemonadePitchers.Add(thisMix);
@@ -167,9 +176,9 @@ namespace LemonadeStand
 
         private string DetermineMixName(int amtLemons, int amtSugar, int amtIce, double price, string mixName, int numPitchers)
         {
-                string message = "What do you want to call this great mix?";
-                UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
-               return (Console.ReadLine());
+            string message = "What do you want to call this great mix?";
+            UserInterface.MixLemonadeMenu(name, wallet, mySupplies, amtLemons, amtSugar, amtIce, price, numPitchers, mixName, message);
+            return (Console.ReadLine());
         }
 
         private double DeterminePriceFromUser(int amtLemons, int amtSugar, int amtIce, double price, string mixName, int numPitchers)
@@ -262,7 +271,7 @@ namespace LemonadeStand
         {
             string message = "What would you like to do?";
             UserInterface.PurchaseSuppliesMenu(name, wallet, mySupplies, mySupplier, message);
-            string response = Console.ReadLine().ToLower();
+            string response = Console.ReadLine().ToLower().Trim();
             int qty;
             switch (response)
             {
@@ -271,7 +280,7 @@ namespace LemonadeStand
                 case "lemons":
                 case "l":
                     qty = DetermineQuantityFromPlayer("Lemons");
-                    if(EnoughFundsToPurchase("Lemon", qty))
+                    if (EnoughFundsToPurchase("Lemon", qty))
                     {
                         AddSupplies("Lemon", qty);
                     }
@@ -333,23 +342,24 @@ namespace LemonadeStand
             switch (item)
             {
                 case "Lemon":
-                    for(int i = 0; i < qty; i++)
+                    for (int i = 0; i < qty; i++)
                     {
-                        mySupplies.myLemons.Add(mySupplier.ALemon);
+
+                        mySupplies.myLemons.Add(mySupplier.GetNewLemon());
                         wallet -= mySupplier.GetPrice("Lemon");
                     }
                     break;
                 case "Sugar":
                     for (int i = 0; i < qty; i++)
                     {
-                        mySupplies.mySugar.Add(mySupplier.ACupOfSugar);
+                        mySupplies.mySugar.Add(mySupplier.GetNewSugar());
                         wallet -= mySupplier.GetPrice("Sugar");
                     }
                     break;
                 case "Ice":
                     for (int i = 0; i < qty; i++)
                     {
-                        mySupplies.myIce.Add(mySupplier.AnIceCube);
+                        mySupplies.myIce.Add(mySupplier.GetNewIce());
                         wallet -= mySupplier.GetPrice("Ice");
                     }
                     break;
@@ -359,7 +369,7 @@ namespace LemonadeStand
         private int DetermineQuantityFromPlayer(string item)
         {
             int qty = 0;
-            string message = "How many " + item + " do you want?";
+            string message = "How much " + item + " do you want?";
             UserInterface.PurchaseSuppliesMenu(name, wallet, mySupplies, mySupplier, message);
             string response = Console.ReadLine();
             try
@@ -382,7 +392,7 @@ namespace LemonadeStand
             switch (item)
             {
                 case "Lemon":
-                    if(wallet >= qty * mySupplier.GetPrice("Lemon"))
+                    if (wallet >= qty * mySupplier.GetPrice("Lemon"))
                     {
                         return true;
                     }

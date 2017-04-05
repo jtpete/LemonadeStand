@@ -62,7 +62,9 @@ namespace LemonadeStand
         public void AdvanceForcast()
         {
             currentTemp = fiveDayTemps.First();
+            FiveDayTemps.RemoveAt(0);
             currentCondition = fiveDayConditions.First();
+            fiveDayConditions.RemoveAt(0);
             Random rand = new Random();
             fiveDayTemps.Add(allTemps[rand.Next(0, 10)]);
             fiveDayConditions.Add(allConditions[rand.Next(0, 10)]);

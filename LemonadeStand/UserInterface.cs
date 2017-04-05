@@ -105,6 +105,28 @@ namespace LemonadeStand
             Console.WriteLine($"|   {message}                                   ");
             Console.WriteLine($"|_______________________________________________");
         }
+        public static void ConfirmMixture(int amtLemon, int amtSugar, int amtIce, double price, int numPitchers, string mixName, string message)
+        {
+            Console.Clear();
+            Console.WriteLine($" _______________________________________________ ");
+            Console.WriteLine($"|                 CONFIRM TODAY'S MIX            ");
+            Console.WriteLine($"|                                                ");
+            if (price == 0)
+                Console.WriteLine("|         Cost Per Cup:  FREE!                ");
+            else
+                Console.WriteLine("|         Cost Per Cup:  ${0}     ", price.ToString("0.00"));
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|     Number of Pitchers : {numPitchers}         ");
+            Console.WriteLine($"|     Mix Name           : {mixName}             ");
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|     Current Mix--------------------------      ");
+            Console.WriteLine($"|     Lemons        : {amtLemon}                 ");
+            Console.WriteLine($"|     Cups of Sugar : {amtSugar}                ");
+            Console.WriteLine($"|     Ice Cubes     : {amtIce}                   ");
+            Console.WriteLine($"|_______________________________________________");
+            Console.WriteLine($"|   {message}                                   ");
+            Console.WriteLine($"|_______________________________________________");
+        }
 
         public static void PurchaseSuppliesMenu(string name, double wallet, Supplies suppliesList, Supplier vendor, string message)
         {
@@ -131,21 +153,21 @@ namespace LemonadeStand
             Console.WriteLine($"|_______________________________________________");
         }
 
-        public static void EndOfDayReport(string name, double wallet, int startingPitcherCount, int numPitchersLeft, double totalSales, int custVisits, int temp, string condition, string message)
+        public static void EndOfDayReport(int dayNum, string name, double wallet, int startingPitcherCount, int numPitchersLeft, double totalSales, int custVisits, int temp, string condition, string message)
         {
             Console.Clear();
             Console.WriteLine($" _______________________________________________ ");
-            Console.WriteLine($"|                 TODAY'S SALES                   ");
+            Console.WriteLine($"|             Day {dayNum} SALES                  ");
             Console.WriteLine("|   Temp: {0}\u00B0     Conditions: {1}  ", temp, condition);
             Console.WriteLine($"|                                                ");
             Console.WriteLine($"|   {name}                                        ");
             Console.WriteLine("|   Total: ${0}                     ", wallet.ToString("0.00"));
             Console.WriteLine($"|                                                ");
             Console.WriteLine($"|     Current Supplies:                            ");
-            Console.WriteLine("|     Total Income               :  ${0}       ", totalSales.ToString("0.00"));
+            Console.WriteLine("|     Total Income              : ${0}       ", totalSales.ToString("0.00"));
             Console.WriteLine($"|     Total Pitchers Available  : {startingPitcherCount}");
             Console.WriteLine($"|     Total Pitchers Sold       : {startingPitcherCount - numPitchersLeft}");
-            Console.WriteLine($"|     Total Customers           : {custVisits}");
+            Console.WriteLine($"|     Total People Outside      : {custVisits}");
             Console.WriteLine($"|                                                ");
             Console.WriteLine($"|_______________________________________________");
             Console.WriteLine($"|   {message}                                   ");

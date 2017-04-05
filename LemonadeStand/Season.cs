@@ -9,6 +9,7 @@ namespace LemonadeStand
     class Season
     {
         Weather myWeather = new Weather();
+        int dayCount = 1;
 
         int seasonLength;
         public Season(int seasonLength)
@@ -18,13 +19,10 @@ namespace LemonadeStand
 
         public void SalesSeason(Player player1)
         {
-            int days = 1; 
-            while (days <= seasonLength)
+
+            while (dayCount <= seasonLength)
             {
                 PrepareForDay(player1);
-                //run through day
-                //report on day
-                days += 1;
             }
         }
 
@@ -61,15 +59,14 @@ namespace LemonadeStand
                 case "prepare":
                 case "lemonade":
                 case "l":
-                    player1.MixLemonade();                    
+                    player1.MixLemonade();
                     break;
                 case "5":
                 case "start day":
                 case "start":
                 case "day":
                 case "go":
-                    Day newDay = new Day(myWeather.CurrentTemp, myWeather.CurrentCondition, player1);
-                    newDay.SellLemonade();
+                    RunThroughDay(player1);
                     break;
                 default:
                     PrepareForDay(player1);
@@ -78,9 +75,17 @@ namespace LemonadeStand
             }
         }
 
-        private void GetTodaysWeatherReport()
+        private void RunThroughDay(Player player1)
         {
-
+            Day newDay = new Day(dayCount, myWeather.CurrentTemp, myWeather.CurrentCondition, player1);
+            if (player1.MySupplies.myLemonadePitchers.Count > 0)
+            {
+                newDay.SellLemonade();
+            }
+            dayCount += 1;
+            myWeather.AdvanceForcast();
+            player1.MySupplies.ReduceSupplyShelflife();
+            player1.MySupplies.RemoveAllExpiredItems();
         }
     }
- }
+}

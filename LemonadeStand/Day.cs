@@ -12,13 +12,15 @@ namespace LemonadeStand
         public int TodaysTemp { get { return todaysTemp; } }
         private string todaysCondition;
         public string TodaysCondition { get { return todaysCondition; } }
-        private Player person; 
-        public Player Person {  get { return person; } }
+        private Player person;
+        public Player Person { get { return person; } }
         private List<Customer> myCrowd = new List<Customer>();
         public int MyCrowd { get { return myCrowd.Count; } }
         double todaysProfit = 0;
-        public Day(int currTemp, string currCond, Player person)
+        int dayNumber;
+        public Day(int dayNumber, int currTemp, string currCond, Player person)
         {
+            this.dayNumber = dayNumber;
             this.todaysTemp = currTemp;
             this.todaysCondition = currCond;
             this.person = person;
@@ -28,34 +30,42 @@ namespace LemonadeStand
         public void SellLemonade()
         {
             int startingPitcherCount = person.MySupplies.myLemonadePitchers.Count;
-            int cupCount = 0;
+            int cupCount = person.MySupplies.myLemonadePitchers.Count * 20;
             double dailySales = 0;
-            int totalCustomers = 0;
+            double pitchPrice = person.MySupplies.myLemonadePitchers[0].Price;
+            string pitchQuality = person.MySupplies.myLemonadePitchers[0].Quality;
+            Random rand = new Random();
             for (int i = 0; i < myCrowd.Count; i++)
             {
-                if (myCrowd[i].Thirsty)
+
+                if(MakeSale(cupCount, pitchPrice, pitchQuality, i, rand))
                 {
-                    totalCustomers += 1;
-                    if(person.MySupplies.myLemonadePitchers.Count > 0)
+                    dailySales += pitchPrice;
+                    person.Wallet += pitchPrice;
+                    cupCount -= 1;
+                    if (cupCount % 10 == 0 && person.MySupplies.myLemonadePitchers.Count > 0)
                     {
-                        dailySales += MakeSale();
-                        cupCount += 1;
-                    }
-                    if(cupCount == 10)
-                    {
-                        cupCount = 0;
                         RemovePitcher();
                     }
                 }
             }
-            UserInterface.EndOfDayReport(person.Name, person.Wallet, startingPitcherCount, person.MySupplies.myLemonadePitchers.Count, dailySales, totalCustomers, TodaysTemp, TodaysCondition, "Great Job! Enter To Continue.");
+            UserInterface.EndOfDayReport(dayNumber, person.Name, person.Wallet, startingPitcherCount, person.MySupplies.myLemonadePitchers.Count, dailySales, myCrowd.Count, TodaysTemp, TodaysCondition, "Great Job! Enter To Continue.");
             Console.ReadLine();
         }
 
-        private double MakeSale()
+        private bool MakeSale(int cupCount, double pitchPrice, string quality, int crowd, Random rand )
         {
-            return person.Wallet = person.MySupplies.myLemonadePitchers[0].Price;
+            if (myCrowd[crowd].Thirsty || (myCrowd[crowd].MaxPrice - pitchPrice) >= .75)
+                if (myCrowd[crowd].MaxPrice >= pitchPrice)
+                    if (quality != "good" && rand.Next(1,2) == 2)
+                    {
+                        return false;
+                    }
+                    else if (cupCount > 0)
+                        return true;
+            return false;
         }
+
         private void RemovePitcher()
         {
             person.MySupplies.myLemonadePitchers.RemoveAt(0);
@@ -63,11 +73,11 @@ namespace LemonadeStand
 
         private void DetermineAmountCustomers()
         {
-            if(todaysTemp > 90 && todaysCondition == "Sunny" || todaysCondition == "Partly Sunny")
+            if (todaysTemp > 90 && (todaysCondition == "Sunny" || todaysCondition == "Partly Sunny"))
             {
                 CreateCrowd(150);
             }
-            else if(todaysTemp > 90 && todaysCondition == "Cloudy" || todaysCondition == "Overcast")
+            else if (todaysTemp > 90 && (todaysCondition == "Cloudy" || todaysCondition == "Overcast"))
             {
                 CreateCrowd(120);
             }
@@ -79,11 +89,11 @@ namespace LemonadeStand
             {
                 CreateCrowd(100);
             }
-            else if (todaysTemp > 80 && todaysCondition == "Sunny" || todaysCondition == "Partly Sunny")
+            else if (todaysTemp > 80 && (todaysCondition == "Sunny" || todaysCondition == "Partly Sunny"))
             {
                 CreateCrowd(90);
             }
-            else if (todaysTemp > 80 && todaysCondition == "Cloudy" || todaysCondition == "Overcast")
+            else if (todaysTemp > 80 && (todaysCondition == "Cloudy" || todaysCondition == "Overcast"))
             {
                 CreateCrowd(80);
             }
@@ -95,11 +105,11 @@ namespace LemonadeStand
             {
                 CreateCrowd(75);
             }
-            else if (todaysTemp > 50 && todaysCondition == "Sunny" || todaysCondition == "Partly Sunny")
+            else if (todaysTemp > 50 && (todaysCondition == "Sunny" || todaysCondition == "Partly Sunny"))
             {
                 CreateCrowd(70);
             }
-            else if (todaysTemp > 50 && todaysCondition == "Cloudy" || todaysCondition == "Overcast")
+            else if (todaysTemp > 50 && (todaysCondition == "Cloudy" || todaysCondition == "Overcast"))
             {
                 CreateCrowd(60);
             }
@@ -111,13 +121,19 @@ namespace LemonadeStand
             {
                 CreateCrowd(55);
             }
+            else
+            {
+                CreateCrowd(75);
+            }
         }
 
         private void CreateCrowd(int size)
         {
-            for(int i = 0; i < size; i++)
+            Random rand = new Random();
+
+            for (int i = 0; i < size; i++)
             {
-                Customer thisCustomer = new Customer(todaysTemp, todaysCondition);
+                Customer thisCustomer = new Customer(todaysTemp, todaysCondition, rand);
                 myCrowd.Add(thisCustomer);
             }
         }

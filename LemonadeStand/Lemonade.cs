@@ -12,7 +12,8 @@ namespace LemonadeStand
         int amtLemons;
         int amtSugar;
         int amtIce;
-        string quality;
+        private string quality;
+        public string Quality { get { return quality; } }
         public Lemonade(string name, int shelfLifeDays, double price, int amtLemons, int amtSugar, int amtIce, string mixName)
         {
             this.name = name;

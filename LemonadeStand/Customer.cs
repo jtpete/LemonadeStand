@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LemonadeStand
@@ -11,76 +12,126 @@ namespace LemonadeStand
         private bool thirsty = false;
         public bool Thirsty { get { return thirsty; } }
         public int drinkRating;
+        private double maxPrice;
+        public double MaxPrice { get { return maxPrice; } }
 
-        public Customer(int temp, string cond)
+        public Customer(int temp, string cond, Random rand)
         {
-            Random rand = new Random();
-            int likely; 
-            if (temp > 90 && cond == "Sunny" || cond == "Partly Sunny")
+            SetThirst(temp, cond, rand);
+            SetPriceTolerance(temp, cond, rand);
+        }
+        private void SetPriceTolerance(int temp, string cond, Random rand)
+        {
+            maxPrice = 1;
+            int likely = rand.Next(0,10);
+            if (temp >= 100)
             {
-                //75% chance 
-                likely = rand.Next(0, 4);
-                if(likely == 1 || likely == 2 || likely == 3)
+                if(likely <= 9)
+                {
+                    maxPrice = 3;
+                }
+            }
+            else if (temp >= 90)
+            {
+                if (likely <= 6 && cond != "Rainy")
+                {
+                    maxPrice = 2;
+                }
+
+            }
+            else if (temp >= 80)
+            {
+                if (likely <= 4 && cond != "Rainy")
+                {
+                    maxPrice = 1.5;
+                }
+
+            }
+            else if (temp >= 70)
+            {
+                if (likely <= 7)
+                {
+                    maxPrice = .75;
+                }
+
+            }
+            else if (cond == "Rainy")
+            {
+                if (likely <= 7)
+                {
+                    maxPrice = .50;
+                }
+
+            }
+            else if (temp < 70)
+            {
+                if (likely <= 7)
+                {
+                    maxPrice = .25;
+                }
+
+            }
+        }
+        private void SetThirst(int temp, string cond, Random rand)
+        {
+            int likely = rand.Next(1, 10);
+            if (temp > 90 && (cond == "Sunny" || cond == "Partly Sunny"))
+            {
+                if(likely <= 9)  //80% chance 
                 {
                     thirsty = true;
                 }
             }
-            if (temp > 90 && cond == "Cloudy" || cond == "Overcast")
+            else if (temp > 90 && (cond == "Cloudy" || cond == "Overcast"))
             {
-                //50% chance 
-                likely = rand.Next(0, 1);
-                if (likely == 1)
+                if (likely <= 5) //50% chance 
                 {
                     thirsty = true;
                 }
             }
-            if (temp > 90 && cond == "Rainy" || cond == "Breezy")
+            else if (temp > 90 && (cond == "Rainy" || cond == "Breezy"))
             {
-                //40% chance 
-                likely = rand.Next(0, 10);
-                if (likely == 1 || likely == 2 || likely == 3 || likely == 4)
+                if (likely <= 4) //40% chance
                 {
                     thirsty = true;
                 }
             }
-            if (temp > 80 && cond == "Rainy" || cond == "Breezy")
-            {
-                //30% chance 
-                likely = rand.Next(0, 10);
-                if (likely == 1 || likely == 2 || likely == 3)
+            else if (temp > 80 && (cond == "Rainy" || cond == "Breezy"))
+            { 
+                if (likely <= 3) //30% chance
                 {
                     thirsty = true;
                 }
             }
             else if (temp > 80)
             {
-                //50% chance 
-                likely = rand.Next(0, 1);
-                if (likely == 1)
+                if (likely <= 5) //50% chance
                 {
                     thirsty = true;
                 }
             }
-            else if (temp > 50 && cond == "Sunny" || cond == "Partly Sunny")
+            else if (temp > 50 && (cond == "Sunny" || cond == "Partly Sunny"))
             {
-                //40% chance 
-                likely = rand.Next(0, 10);
-                if (likely == 1 || likely == 2 || likely == 3 || likely == 4)
+                if (likely <= 4) //40% chance
                 {
                     thirsty = true;
                 }
             }
             else if (temp > 50)
             {
-                //20% chance 
-                likely = rand.Next(0, 10);
-                if (likely == 1 || likely == 2)
+                if (likely <= 2) //20% chance
+                {
+                    thirsty = true;
+                }
+
+            }
+            else
+            {
+                if (likely <= 5) //50% chance
                 {
                     thirsty = true;
                 }
             }
-
-
         }
     }
 }
