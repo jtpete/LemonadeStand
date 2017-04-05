@@ -9,6 +9,7 @@ namespace LemonadeStand
     class Season
     {
         Weather myWeather = new Weather();
+        List<DailyReport> myReports = new List<DailyReport>();
         int dayCount = 1;
 
         int seasonLength;
@@ -24,6 +25,7 @@ namespace LemonadeStand
             {
                 PrepareForDay(player1);
             }
+            UserInterface.EndOfSeasonReport(player1, seasonLength)
         }
 
         public void PrepareForDay(Player player1)
@@ -37,7 +39,15 @@ namespace LemonadeStand
                 case "finances":
                 case "f":
                 case "s":
-                    // see financial info 
+                    if (myReports.Count > 0)
+                    {
+                        UserInterface.SeasonReports(myReports, dayCount-1, "Use Left or Right arrows to scroll through reports.  'Enter' when done.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry, no reports available on your first day. Enter to continue.");
+                        Console.ReadLine();
+                    }
                     break;
                 case "2":
                 case "check weather":
@@ -82,6 +92,7 @@ namespace LemonadeStand
             {
                 newDay.SellLemonade();
             }
+            myReports.Add(newDay.todaysReport);
             dayCount += 1;
             myWeather.AdvanceForcast();
             player1.MySupplies.ReduceSupplyShelflife();

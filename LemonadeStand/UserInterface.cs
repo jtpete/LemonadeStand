@@ -153,25 +153,103 @@ namespace LemonadeStand
             Console.WriteLine($"|_______________________________________________");
         }
 
-        public static void EndOfDayReport(int dayNum, string name, double wallet, int startingPitcherCount, int numPitchersLeft, double totalSales, int custVisits, int temp, string condition, string message)
+        public static void EndOfDayReport(DailyReport report, string message)
         {
             Console.Clear();
             Console.WriteLine($" _______________________________________________ ");
-            Console.WriteLine($"|             Day {dayNum} SALES                  ");
-            Console.WriteLine("|   Temp: {0}\u00B0     Conditions: {1}  ", temp, condition);
+            Console.WriteLine($"|             Day {report.DayNumber} SALES                  ");
+            Console.WriteLine("|   Temp: {0}\u00B0     Conditions: {1}  ", report.WTemp, report.WCondition);
             Console.WriteLine($"|                                                ");
-            Console.WriteLine($"|   {name}                                        ");
-            Console.WriteLine("|   Total: ${0}                     ", wallet.ToString("0.00"));
+            Console.WriteLine($"|   {report.SellerName}                                        ");
+            Console.WriteLine($"|    Bottom Line-----------------------------    ");
+            Console.WriteLine("|     Total Sales               : ${0}       ", report.Gross.ToString("0.00"));
+            Console.WriteLine("|     Net   Sales               : ${0}       ", report.Net.ToString("0.00"));
             Console.WriteLine($"|                                                ");
-            Console.WriteLine($"|     Current Supplies:                            ");
-            Console.WriteLine("|     Total Income              : ${0}       ", totalSales.ToString("0.00"));
-            Console.WriteLine($"|     Total Pitchers Available  : {startingPitcherCount}");
-            Console.WriteLine($"|     Total Pitchers Sold       : {startingPitcherCount - numPitchersLeft}");
-            Console.WriteLine($"|     Total People Outside      : {custVisits}");
+            Console.WriteLine($"|     Relevant Stats-------------------------                                           ");
+            Console.WriteLine($"|     Total Pitchers Available  : {report.PitchersAvailable}");
+            Console.WriteLine($"|     Total Pitchers Sold       : {report.PitchersSold}");
+            Console.WriteLine($"|     Total Cups Sold           : {report.CupsSold}");
+            Console.WriteLine($"|     Price of Cup              : ${report.PricePerCup.ToString("0.00")}");
+            Console.WriteLine($"|     Quality of Pitcher        : {report.QualityOfSupply}");
+            Console.WriteLine($"|     Cost    of Pitcher        : ${report.CostOfPitcher.ToString("0.00")}");
+            Console.WriteLine($"|     Total People Outside      : {report.CrowdCount}");
             Console.WriteLine($"|                                                ");
             Console.WriteLine($"|_______________________________________________");
             Console.WriteLine($"|   {message}                                   ");
             Console.WriteLine($"|_______________________________________________");
+        }
+
+        public static void EndOfSeasonReport(Player person, int gamelength)
+        {
+            Console.Clear();
+            Console.WriteLine($" _______________________________________________ ");
+            Console.WriteLine($"|                  YOU MADE IT!!!               ");
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|   {person.Name}                                ");
+            Console.WriteLine($"|                                                ");
+            if (person.Wallet > 0)
+                Console.WriteLine($"|     You Still have ${person.Wallet.ToString("0.00")} in your wallet.");
+            else if (person.Wallet == 0)
+                Console.WriteLine($"|     Well you didn't lose money...             ");
+            else
+                Console.WriteLine($"|     File for bankruptcy!!!             ");
+            Console.WriteLine($"|_______________________________________________");
+            Console.WriteLine($"|              THANKS FOR PLAYING!              ");
+            Console.WriteLine($"|_______________________________________________");
+        }
+
+        public static void SeasonReports(List<DailyReport> report, int dayNumber, string message)
+        {
+            Console.Clear();
+            Console.WriteLine($" _______________________________________________ ");
+            Console.WriteLine($"|             Day {report[dayNumber-1].DayNumber} SALES                  ");
+            Console.WriteLine("|   Temp: {0}\u00B0     Conditions: {1}  ", report[dayNumber-1].WTemp, report[dayNumber-1].WCondition);
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|   {report[dayNumber-1].SellerName}                                        ");
+            Console.WriteLine($"|    Bottom Line-----------------------------    ");
+            Console.WriteLine("|     Total Sales               : ${0}       ", report[dayNumber-1].Gross.ToString("0.00"));
+            Console.WriteLine("|     Net   Sales               : ${0}       ", report[dayNumber-1].Net.ToString("0.00"));
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|     Relevant Stats-------------------------                                           ");
+            Console.WriteLine($"|     Total Pitchers Available  : {report[dayNumber-1].PitchersAvailable}");
+            Console.WriteLine($"|     Total Pitchers Sold       : {report[dayNumber-1].PitchersSold}");
+            Console.WriteLine($"|     Total Cups Sold           : {report[dayNumber-1].CupsSold}");
+            Console.WriteLine($"|     Price of Cup              : ${report[dayNumber-1].PricePerCup.ToString("0.00")}");
+            Console.WriteLine($"|     Quality of Pitcher        : {report[dayNumber-1].QualityOfSupply}");
+            Console.WriteLine($"|     Cost    of Pitcher        : ${report[dayNumber-1].CostOfPitcher.ToString("0.00")}");
+            Console.WriteLine($"|     Total People Outside      : {report[dayNumber-1].CrowdCount}");
+            Console.WriteLine($"|                                                ");
+            Console.WriteLine($"|_______________________________________________");
+            Console.WriteLine($"|   {message}                                   ");
+            Console.WriteLine($"|_______________________________________________");
+            ConsoleKeyInfo info = Console.ReadKey();
+            if(info.Key == ConsoleKey.RightArrow && report.Count > dayNumber)
+            {
+                dayNumber += 1;
+                message = "Use Left or Right arrows to scroll through reports.  'Enter' when done.";
+                SeasonReports(report, dayNumber, message);
+            }
+            else if(info.Key == ConsoleKey.RightArrow && report.Count <= dayNumber)
+            {
+                message = "No more reports available";
+                SeasonReports(report, dayNumber, message);
+            }
+            else if(info.Key == ConsoleKey.LeftArrow && dayNumber == 1)
+            {
+                message = "At first report";
+                SeasonReports(report, dayNumber, message);
+            }
+            else if (info.Key == ConsoleKey.LeftArrow && dayNumber > 1)
+            {
+                dayNumber -= 1;
+                message = "Use Left or Right arrows to scroll through reports.  'Enter' when done.";
+                SeasonReports(report, dayNumber, message);
+            }
+            else if (info.Key != ConsoleKey.Enter)
+            {
+                message = "Use Left or Right arrows to scroll through reports.  'Enter' when done.";
+                SeasonReports(report, dayNumber, message);
+            }
         }
 
 

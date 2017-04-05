@@ -159,6 +159,8 @@ namespace LemonadeStand
 
         private void ProducePitchers(int amtLemons, int amtSugar, int amtIce, int numPitchers, double price, string mixName)
         {
+            double cost = (mySupplier.ALemon.Price * amtLemons) + (mySupplier.ACupOfSugar.Price * amtSugar) + (mySupplier.AnIceCube.Price * amtIce);
+
             if (amtLemons > 0)
                 MySupplies.RemoveSupply("Lemon", amtLemons * numPitchers);
             if (amtSugar > 0)
@@ -168,7 +170,7 @@ namespace LemonadeStand
 
             for (int i = 0; i < numPitchers; i++)
             {
-                Lemonade thisMix = new Lemonade("Lemonade", 0, price, amtLemons, amtSugar, amtIce, mixName);
+                Lemonade thisMix = new Lemonade("Lemonade", 0, price, cost, amtLemons, amtSugar, amtIce, mixName);
                 mySupplies.myLemonadePitchers.Add(thisMix);
             }
 

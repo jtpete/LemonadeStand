@@ -15,6 +15,8 @@ namespace LemonadeStand
         private Player person;
         public Player Person { get { return person; } }
         private List<Customer> myCrowd = new List<Customer>();
+        public DailyReport todaysReport = new DailyReport();
+
         public int MyCrowd { get { return myCrowd.Count; } }
         double todaysProfit = 0;
         int dayNumber;
@@ -31,9 +33,19 @@ namespace LemonadeStand
         {
             int startingPitcherCount = person.MySupplies.myLemonadePitchers.Count;
             int cupCount = person.MySupplies.myLemonadePitchers.Count * 20;
+            int startingCupCount = person.MySupplies.myLemonadePitchers.Count * 20;
+            todaysReport.CostOfPitcher = person.MySupplies.myLemonadePitchers[0].Cost;
             double dailySales = 0;
             double pitchPrice = person.MySupplies.myLemonadePitchers[0].Price;
             string pitchQuality = person.MySupplies.myLemonadePitchers[0].Quality;
+            todaysReport.PricePerCup = pitchPrice;
+            todaysReport.PitchersAvailable = startingPitcherCount;
+            todaysReport.SellerName = person.Name;
+            todaysReport.QualityOfSupply = pitchQuality;
+            todaysReport.WTemp = TodaysTemp;
+            todaysReport.WCondition = todaysCondition;
+            todaysReport.DayNumber = dayNumber;
+
             Random rand = new Random();
             for (int i = 0; i < myCrowd.Count; i++)
             {
@@ -49,7 +61,12 @@ namespace LemonadeStand
                     }
                 }
             }
-            UserInterface.EndOfDayReport(dayNumber, person.Name, person.Wallet, startingPitcherCount, person.MySupplies.myLemonadePitchers.Count, dailySales, myCrowd.Count, TodaysTemp, TodaysCondition, "Great Job! Enter To Continue.");
+            todaysReport.Gross = dailySales;
+            todaysReport.CrowdCount = myCrowd.Count;
+            todaysReport.PitchersSold = startingPitcherCount - person.MySupplies.myLemonadePitchers.Count;
+            todaysReport.Net = dailySales - (todaysReport.CostOfPitcher * startingPitcherCount);
+            todaysReport.CupsSold = startingCupCount - cupCount;
+            UserInterface.EndOfDayReport(todaysReport, "Great Job! Enter To Continue.");
             Console.ReadLine();
         }
 
