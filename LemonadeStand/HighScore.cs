@@ -105,5 +105,52 @@ namespace LemonadeStand
             }
 
         }
+        public bool CheckForHighScore(double wallet)
+        {
+            bool highScore = false;
+            try
+            {
+                mydb.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadLine();
+            }
+
+
+            try
+            {
+
+                string query = $"SELECT COUNT(*) FROM dbo.High_Score WHERE Wallet > {wallet}";
+                SqlCommand myCmd = new SqlCommand(query, mydb);
+                SqlDataReader myReader = myCmd.ExecuteReader();
+                while (myReader.Read())
+                {
+                    if (myReader.GetSqlInt32(0) < 5)
+                        highScore = true;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadLine();
+            }
+
+
+            try
+            {
+                mydb.Close();
+            }
+            catch
+            {
+                Console.WriteLine("Sorry problem closing the database");
+                Console.ReadLine();
+            }
+            return highScore;
+
+        }
     }
 }

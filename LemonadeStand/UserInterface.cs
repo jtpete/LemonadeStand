@@ -193,23 +193,24 @@ namespace LemonadeStand
             Console.WriteLine("|____________________________________________");
         }
 
-        public static void EndOfSeasonReport(Player person, int gamelength)
+        public static void EndOfSeasonReport(Player person, string message)
         {
             Console.Clear();
             Console.WriteLine(" ______________________________________________ ");
             Console.WriteLine("|                  YOU MADE IT!!!              |");
             Console.WriteLine("|                                              |");
-            Console.WriteLine("|   {0,-15}                                    |", person.Name);
+            Console.WriteLine("|   {0,-15}                            |", person.Name);
             Console.WriteLine("|                                              |");
             if (person.Wallet > 0)
-                Console.WriteLine("|   ${0,-7} - Not Bad!.                       |", person.Wallet.ToString("0.00"));
+                Console.WriteLine("|   ${0,-7} - Not Bad!                        |", person.Wallet.ToString("0.00"));
             else if (person.Wallet == 0)
                 Console.WriteLine("|     Well you didn't lose money...           |");
             else
                 Console.WriteLine("|     File for bankruptcy!!!                  |");
             Console.WriteLine("|______________________________________________|");
-            Console.WriteLine("|              THANKS FOR PLAYING!             |");
-            Console.WriteLine("|______________________________________________|");
+            Console.WriteLine($"|  {message}                                  ");
+            Console.WriteLine("|______________________________________________");
+            Console.ReadLine();
         }
 
         public static void SeasonReports(List<DailyReport> report, int dayNumber, string message)
@@ -313,6 +314,12 @@ namespace LemonadeStand
                 case "three weeks":
                     {
                         gameLength = 21;
+                        break;
+                    }
+                case "t":
+                case "test":
+                    {
+                        gameLength = 1;
                         break;
                     }
             }

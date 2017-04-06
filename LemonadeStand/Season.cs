@@ -25,7 +25,8 @@ namespace LemonadeStand
             {
                 PrepareForDay(player1);
             }
-            UserInterface.EndOfSeasonReport(player1, seasonLength);
+     
+            
         }
 
         public void PrepareForDay(Player player1)

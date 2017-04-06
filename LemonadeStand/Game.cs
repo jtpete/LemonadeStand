@@ -30,6 +30,13 @@ namespace LemonadeStand
         {
             Season mySeason = new LemonadeStand.Season(gameLength);
             mySeason.SalesSeason(player1);
+            string message = "Wow, Great Season!";
+            if (myHighScore.CheckForHighScore(player1.Wallet))
+            {
+                myHighScore.AddHighScore(player1.Name, player1.Wallet);
+                message = "You made the high score list!";
+                UserInterface.EndOfSeasonReport(player1, message);
+            }
         }
 
         private void SetupGame()
