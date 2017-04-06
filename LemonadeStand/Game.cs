@@ -9,6 +9,7 @@ namespace LemonadeStand
     class Game
     {
         Player player1 = new Player("Player1", 100);
+        HighScore myHighScore = new HighScore();
         bool gameDone = false;
         bool gameReady = false;
         int gameLength = 7;
@@ -62,8 +63,8 @@ namespace LemonadeStand
                 case "scores":
                 case "h":
                     {
-                        Console.WriteLine("Check Out all the winners!!");
-                        Console.ReadLine();
+
+                        myHighScore.HighScoreList();
                         SetupGame();
                         break;
                     }
