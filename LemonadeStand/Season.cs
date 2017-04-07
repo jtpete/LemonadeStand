@@ -91,10 +91,7 @@ namespace LemonadeStand
         private void RunThroughDay(Player player1)
         {
             Day newDay = new Day(dayCount, myWeather.CurrentTemp, myWeather.CurrentCondition, player1);
-            if (player1.MySupplies.myLemonadePitchers.Count > 0)
-            {
-                newDay.SellLemonade();
-            }
+            newDay.SellLemonade();
             CompleteDay(player1);
             ReportDay(player1, newDay);
             SaveDay(player1, newDay.todaysReport);

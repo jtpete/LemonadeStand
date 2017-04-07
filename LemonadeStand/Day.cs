@@ -31,13 +31,19 @@ namespace LemonadeStand
 
         public void SellLemonade()
         {
+            double pitchPrice = 0;
+            string pitchQuality = " ";
             int startingPitcherCount = person.MySupplies.myLemonadePitchers.Count;
             int cupCount = person.MySupplies.myLemonadePitchers.Count * 20;
             int startingCupCount = person.MySupplies.myLemonadePitchers.Count * 20;
-            todaysReport.CostOfPitcher = person.MySupplies.myLemonadePitchers[0].Cost;
+
+            if (person.MySupplies.myLemonadePitchers.Count > 0)
+            {
+                todaysReport.CostOfPitcher = person.MySupplies.myLemonadePitchers[0].Cost;
+                pitchPrice = person.MySupplies.myLemonadePitchers[0].Price;
+                pitchQuality = person.MySupplies.myLemonadePitchers[0].Quality;
+            }
             double dailySales = 0;
-            double pitchPrice = person.MySupplies.myLemonadePitchers[0].Price;
-            string pitchQuality = person.MySupplies.myLemonadePitchers[0].Quality;
             todaysReport.PricePerCup = pitchPrice;
             todaysReport.PitchersAvailable = startingPitcherCount;
             todaysReport.SellerName = person.Name;

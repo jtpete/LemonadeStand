@@ -35,6 +35,7 @@ namespace LemonadeStand
             switch (response)
             {
                 case "":
+                    goodGamePick = false;
                     break;
                 default:
                     try
