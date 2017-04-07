@@ -10,8 +10,11 @@ namespace LemonadeStand
     {
         Player player1 = new Player("Player1", 100);
         HighScore myHighScore = new HighScore();
+        LoadGame myLoadGame = new LoadGame();
+
         bool gameDone = false;
         bool gameReady = false;
+        bool loadGame = false;
         int gameLength = 7;
 
         public void PlayGame()
@@ -19,16 +22,26 @@ namespace LemonadeStand
             while (!gameDone)
             {
                 SetupGame();
-                if (gameReady)
+                if (gameReady && !loadGame)
                 {
                     SellLemonade();
+                }
+                else if (gameReady && loadGame)
+                {
+                    string message = "Wow, Great Season!";
+                    if (myHighScore.CheckForHighScore(player1.Wallet))
+                    {
+                        myHighScore.AddHighScore(player1.Name, player1.Wallet);
+                        message = "You made the high score list!";
+                        UserInterface.EndOfSeasonReport(player1, message);
+                    }
                 }
             }
         }
 
         private void SellLemonade()
         {
-            Season mySeason = new LemonadeStand.Season(gameLength);
+            Season mySeason = new Season(gameLength);
             mySeason.SalesSeason(player1);
             string message = "Wow, Great Season!";
             if (myHighScore.CheckForHighScore(player1.Wallet))
@@ -61,7 +74,15 @@ namespace LemonadeStand
                 case "load":
                 case "l":
                     {
-                        // Load Game Menu
+                        string loadResponse = myLoadGame.LoadGameList();
+                        if (myLoadGame.SetGameToLoad(loadResponse))
+                        {
+                            myLoadGame.LoadThisGame(player1);
+                            loadGame = true;
+                            gameReady = true;
+                        }
+                        else
+                            SetupGame();
                         break;
                     }
                 case "3":

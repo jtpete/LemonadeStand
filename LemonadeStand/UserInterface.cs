@@ -46,6 +46,27 @@ namespace LemonadeStand
             return Console.ReadLine();
         }
 
+        public static string LoadGameList(List<string> names, List<double> wallets, List<DateTime> myGame)
+        {
+            Console.Clear();
+            Console.WriteLine(" _______________________________________________ ");
+            Console.WriteLine("|                                               |");
+            Console.WriteLine("|           WHICH GAME WOULD YOU LIKE           |");
+            Console.WriteLine("|                 TO CONTINUE?                  |");
+            Console.WriteLine("|           OR HIT ENTER TO CONTINUE.           |");
+            Console.WriteLine("|_______________________________________________|");
+            Console.WriteLine("|                                               |");
+            for (int i = 0; i < names.Count; i++)
+            {
+                if (i < 10)
+                    Console.WriteLine("|{0,-2}. {1,-15} ${2,-8}  {3,5} {4,8}  |", i + 1, names.ElementAt(i), wallets.ElementAt(i).ToString("0.00"), myGame.ElementAt(i).ToString("MMM dd"), myGame.ElementAt(i).ToString("h:mm tt"));
+            }
+            Console.WriteLine("|                                               |");
+            Console.WriteLine("|                                               |");
+            Console.WriteLine("|_______________________________________________|");
+            return Console.ReadLine().Trim();
+        }
+
         public static string DisplayTodaysMenu(Player player1, int currTemp, string currCondition)
         {
             Console.Clear();

@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand
 {
-    class Season
+    public class Season
     {
         Weather myWeather = new Weather();
-        List<DailyReport> myReports = new List<DailyReport>();
-        int dayCount = 1;
+        protected List<DailyReport> myReports = new List<DailyReport>();
+        public List<DailyReport> MyReports { get { return myReports; } set { myReports = value; } }
+        protected int dayCount = 1;
+        public int DayCount { get { return dayCount; } set { dayCount = value; } }
 
-        int seasonLength;
+        protected int seasonLength;
         public Season(int seasonLength)
         {
             this.seasonLength = seasonLength;
