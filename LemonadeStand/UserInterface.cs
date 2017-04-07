@@ -101,9 +101,9 @@ namespace LemonadeStand
             Console.WriteLine("|   Manager: {0,-12}    ${1,-10}      |", name, wallet.ToString("0.00"));
             Console.WriteLine($"|                                             |");
             Console.WriteLine($"|     Current Supplies:                       |   ");
-            Console.WriteLine("|     Lemons        : {0,-5}                   |", suppliesList.MyLemons - (amtLemon * supplyOffset));
-            Console.WriteLine("|     Cups of Sugar : {0,-5}                   |", suppliesList.MySugar- (amtSugar * supplyOffset));
-            Console.WriteLine("|     Ice Cubes     : {0,-5}                   |", suppliesList.MyIce - (amtIce * supplyOffset));
+            Console.WriteLine("|     Lemons        : {0,-5}                   |", suppliesList.MyLemons.Count - (amtLemon * supplyOffset));
+            Console.WriteLine("|     Cups of Sugar : {0,-5}                   |", suppliesList.MySugar.Count- (amtSugar * supplyOffset));
+            Console.WriteLine("|     Ice Cubes     : {0,-5}                   |", suppliesList.MyIce.Count - (amtIce * supplyOffset));
             Console.WriteLine("|     Pitchers      : {0,-5}                   |", suppliesList.MyLemonadePitchers + numPitchers);
             Console.WriteLine($"|_____________________________________________|");
             Console.WriteLine($"|                                Per Pitcher  |");
@@ -154,9 +154,9 @@ namespace LemonadeStand
             Console.WriteLine("|   Manager: {0,-12}    ${1,-10}        |", name, wallet.ToString("0.00"));
             Console.WriteLine($"|                                               |");
             Console.WriteLine($"|     Current Supplies:                         |");
-            Console.WriteLine("|     Lemons        : {0,-5}                     |", suppliesList.MyLemons);
-            Console.WriteLine("|     Cups of Sugar : {0,-5}                     |", suppliesList.MySugar);
-            Console.WriteLine("|     Ice Cubes     : {0,-5}                     |", suppliesList.MyIce);
+            Console.WriteLine("|     Lemons        : {0,-5}                     |", suppliesList.MyLemons.Count);
+            Console.WriteLine("|     Cups of Sugar : {0,-5}                     |", suppliesList.MySugar.Count);
+            Console.WriteLine("|     Ice Cubes     : {0,-5}                     |", suppliesList.MyIce.Count);
             Console.WriteLine($"|_______________________________________________|");
             Console.WriteLine($"|                                Current Price  |");
             Console.WriteLine("|     1.  Add Lemons             ${0,-5}         |", vendor.GetPrice("Lemon").ToString("0.00"));

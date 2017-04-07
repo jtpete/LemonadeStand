@@ -63,6 +63,8 @@
     <Compile Include="HighScore.cs" />
     <Compile Include="Ice.cs" />
     <Compile Include="Lemon.cs" />
+    <Compile Include="LoadGame.cs" />
+    <Compile Include="SaveGame.cs" />
     <Compile Include="Pitcher.cs" />
     <Compile Include="DailyReport.cs" />
     <Compile Include="Sugar.cs" />

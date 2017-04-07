@@ -15,6 +15,8 @@ namespace LemonadeStand
         private Supplies mySupplies = new Supplies();
         public Supplies MySupplies { get { return mySupplies; } }
         public Supplier mySupplier = new Supplier();
+        private int playerId;
+        public int PlayerId { get { return playerId; } set { playerId = value; } }
 
         public Player(string name, double startAmount)
         {
@@ -208,9 +210,9 @@ namespace LemonadeStand
 
         private bool EnoughForPitchers(int amtLemons, int amtSugar, int amtIce, int numPitchers)
         {
-            if (numPitchers * amtLemons > MySupplies.MyLemons ||
-                numPitchers * amtSugar > MySupplies.MySugar ||
-                numPitchers * amtIce > MySupplies.MyIce)
+            if (numPitchers * amtLemons > MySupplies.MyLemons.Count ||
+                numPitchers * amtSugar > MySupplies.MySugar.Count ||
+                numPitchers * amtIce > MySupplies.MyIce.Count)
                 return false;
             else
                 return true;
@@ -221,21 +223,21 @@ namespace LemonadeStand
             switch (item)
             {
                 case "Lemon":
-                    if (MySupplies.MyLemons >= qty)
+                    if (MySupplies.MyLemons.Count >= qty)
                     {
                         return true;
                     }
                     else return false;
                     break;
                 case "Sugar":
-                    if (MySupplies.MySugar >= qty)
+                    if (MySupplies.MySugar.Count >= qty)
                     {
                         return true;
                     }
                     else return false;
                     break;
                 case "Ice":
-                    if (MySupplies.MyIce >= qty)
+                    if (MySupplies.MyIce.Count >= qty)
                     {
                         return true;
                     }

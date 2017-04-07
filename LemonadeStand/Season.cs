@@ -93,11 +93,41 @@ namespace LemonadeStand
             {
                 newDay.SellLemonade();
             }
-            myReports.Add(newDay.todaysReport);
+            CompleteDay(player1);
+            ReportDay(player1, newDay);
+            SaveDay(player1, newDay.todaysReport);
             dayCount += 1;
+
+        }
+
+        private void CompleteDay(Player player1)
+        {
             myWeather.AdvanceForcast();
             player1.MySupplies.ReduceSupplyShelflife();
             player1.MySupplies.RemoveAllExpiredItems();
+        }
+
+        private void SaveDay(Player player1, DailyReport aReport)
+        {
+            SaveGame mySave = new SaveGame();
+            DateTime myGame = DateTime.Now;
+            
+            if (dayCount == 1)
+            {
+                mySave.InsertIntoPlayer(player1, myGame, seasonLength);
+                player1.PlayerId = mySave.GetPlayerId(player1, myGame);
+            }
+            mySave.InsertIntoReport(aReport, player1.PlayerId);
+            if(player1.MySupplies.MyLemons.Count > 0)
+                mySave.InsertIntoLemons(player1.MySupplies.MyLemons, player1.PlayerId, dayCount);
+            if (player1.MySupplies.MySugar.Count > 0)
+                mySave.InsertIntoSugar(player1.MySupplies.MySugar, player1.PlayerId, dayCount);
+
+        }
+
+        private void ReportDay(Player player1, Day newDay)
+        {
+            myReports.Add(newDay.todaysReport);
         }
     }
 }

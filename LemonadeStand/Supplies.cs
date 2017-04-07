@@ -10,11 +10,11 @@ namespace LemonadeStand
     public class Supplies
     {
         public List<Lemon> myLemons = new List<Lemon>();
-        public int MyLemons { get { return myLemons.Count; } }
+        public List<Lemon> MyLemons { get { return myLemons; } }
         public List<Sugar> mySugar = new List<Sugar>();
-        public int MySugar { get { return mySugar.Count; } }
+        public List<Sugar> MySugar { get { return mySugar; } }
         public List<Ice> myIce = new List<Ice>();
-        public int MyIce { get { return myIce.Count; } }
+        public List<Ice> MyIce { get { return myIce; } }
         public List<Lemonade> myLemonadePitchers = new List<Lemonade>();
         public int MyLemonadePitchers { get { return myLemonadePitchers.Count; } }
 
