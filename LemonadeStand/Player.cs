@@ -164,11 +164,12 @@ namespace LemonadeStand
             double cost = (mySupplier.ALemon.Price * amtLemons) + (mySupplier.ACupOfSugar.Price * amtSugar) + (mySupplier.AnIceCube.Price * amtIce);
 
             if (amtLemons > 0)
-                MySupplies.RemoveSupply("Lemon", amtLemons * numPitchers);
+                MySupplies.RemoveSupply(MySupplies.MyLemons, amtLemons * numPitchers);
             if (amtSugar > 0)
-                MySupplies.RemoveSupply("Sugar", amtSugar * numPitchers);
+                MySupplies.RemoveSupply(MySupplies.MySugar, amtSugar * numPitchers);
             if (amtIce > 0)
-                MySupplies.RemoveSupply("Ice", amtIce * numPitchers);
+                MySupplies.RemoveSupply(MySupplies.MyIce, amtIce * numPitchers);
+
 
             for (int i = 0; i < numPitchers; i++)
             {

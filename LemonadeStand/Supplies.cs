@@ -19,63 +19,23 @@ namespace LemonadeStand
         public int MyLemonadePitchers { get { return myLemonadePitchers.Count; } }
 
 
-        public void RemoveSupply(string supplyName, int qty)
+        public void RemoveSupply<T>(List<T> supply, int qty)
         {
-            
-            switch(supplyName)
+            if (qty <= supply.Count)
             {
-                case "Lemon":
-                    if (qty <= myLemons.Count)
-                    {
-                        for (int i = 0; i < qty; i++)
-                        {
-                            myLemons.RemoveAt(0);
-                        }
-                    }
-                    else
-                        myLemons.RemoveAll(x => x.Name == "Lemon");
-                    break;
-                case "Sugar":
-                    if (qty <= mySugar.Count)
-                    {
-                        for (int i = 0; i < qty; i++)
-                        {
-                            mySugar.RemoveAt(0);
-                        }
-                    }
-                    else
-                        mySugar.RemoveAll(x => x.Name == "Sugar");
-                    break;
-                case "Ice":
-                    if (qty <= myIce.Count)
-                    {
-                        for (int i = 0; i < qty; i++)
-                        {
-                            myIce.RemoveAt(0);
-                        }
-                    }
-                    else
-                        myIce.RemoveAll(x => x.Name == "Ice");
-                    break;
-                case "Lemonade Pitcher":
-                    if (qty >= myLemonadePitchers.Count)
-                    {
-                        for (int i = 0; i < qty; i++)
-                        {
-                            myLemonadePitchers.RemoveAt(0);
-                        }
-                    }
-                    else
-                        myLemonadePitchers.RemoveAll(x => x.Name == "Lemonade");
-                    break;
+                for (int i = 0; i < qty; i++)
+                {
+                    supply.RemoveAt(0);
+                }
             }
         }
+    
 
         public void RemoveAllExpiredItems()
         {
-            myLemons.RemoveAll(x => { return x.BadItem();});
-            mySugar.RemoveAll(x => { return x.BadItem();});
-            myIce.RemoveAll(x => { return x.BadItem();});
+            myLemons.RemoveAll(x => { return x.BadItem(); });
+            mySugar.RemoveAll(x => { return x.BadItem(); });
+            myIce.RemoveAll(x => { return x.BadItem(); });
             myLemonadePitchers.RemoveAll(x => { return x.BadItem(); });
         }
 
